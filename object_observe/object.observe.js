@@ -31,3 +31,28 @@ todoModel.completed = "2015/05/29";
 
 Object.unobserve(todoModel, observer);
 
+var anotherModel = window.anotherModel = {
+	a: {}
+};
+
+var _b = 2;
+
+Object.defineProperty(anotherModel.a, 'b', {
+	get: function(){
+		return _b;
+	},
+	set: function(b){
+		Object.getNotifier(this).notify({
+			type: 'update',
+			name: 'b',
+			oldValue: _b
+		});
+
+		console.log('set',b);
+
+		_b = b;
+	}
+});
+
+
+Object.observe(anotherModel.a, observer);
